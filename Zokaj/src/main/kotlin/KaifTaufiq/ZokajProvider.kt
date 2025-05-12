@@ -1,6 +1,7 @@
 package com.kaiftaufiq
 
 import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.utils.*
 import com.lagradost.api.Log
 import org.jsoup.nodes.Element
 
@@ -104,8 +105,8 @@ class ZokajProvider : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-    val body = app.get(data.url).document
-    val link = document.select("#open-link iframe").attr("data-src").ifEmpty { document.select("#open-link iframe").attr("src") }
+    val Urlbody = app.get(data).document
+    val link = Urlbody.select("#open-link iframe").attr("data-src").ifEmpty { document.select("#open-link iframe").attr("src") }
     loadExtractor(link,subtitleCallback, callback)
     return true
     }
