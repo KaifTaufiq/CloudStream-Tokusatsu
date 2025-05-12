@@ -59,16 +59,16 @@ class ZokajProvider : MainAPI() {
         val document = app.get(url).document
         Log.d("Zokaj",document.toString())
 
-        var title = this.selectFirst(h1).text()
+        var title = this.selectFirst("h1").text()
         var posterUrl = "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/TokuZilla/icon.png"
         val div = document.select("div.video-details").text()
         val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
         if(tvtype == "series") {
-          return newTvSeriesLoadResponse(title, url, TvType.TvSeries) {
+          return newTvSeriesLoadResponse(title, url, TvType.TvSeries, url) {
                 this.posterUrl = posterUrl
             }
         } else {
-          return newMovieLoadResponse(title, url, TvType.Movie) {
+          return newMovieLoadResponse(title, url, TvType.Movie, url) {
                 this.posterUrl = posterUrl
             }
         }
