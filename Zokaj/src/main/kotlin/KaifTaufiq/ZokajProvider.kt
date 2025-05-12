@@ -50,6 +50,10 @@ class ZokajProvider : MainAPI() {
             it.toSearchResult()
         }
     }
-
   
+  override suspend fun load(url: String): LoadResponse {
+        Log.d("Zokaj load",url)
+        val media = parseJson<Media>(url)
+        val document = app.get(media.url).document
+        Log.d("Zokaj",media.toString())
 }
