@@ -1,7 +1,11 @@
 package com.kaiftaufiq
 
 import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.utils.AppUtils.parseJson
+import com.lagradost.cloudstream3.utils.AppUtils.toJson
+import com.lagradost.api.Log
 import org.jsoup.nodes.Element
+
 class ZokajProvider : MainAPI() {
   override var mainUrl = "https://zokaj.com/"
   override var name = "Zokaj"
