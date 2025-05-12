@@ -14,7 +14,7 @@ class TokuZillaProvider : MainAPI() {
   override val hasMainPage = true
   override var lang = "en"
 
-  override val mainPage = mainPageof(
+  override val mainPage = mainPageOf(
     "/categories/super-sentai" = "Super Sentai",
     "/categories/kamen-rider" = "Kamen Rider",
     "/anime" = "Tokusatsu Anime",
