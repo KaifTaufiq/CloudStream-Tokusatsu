@@ -1,0 +1,48 @@
+[
+    {
+        "iconUrl": "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/TokuZilla/icon.png",
+        "jarFileSize": 62895,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/KaifTaufiq/CloudStream-Tokusatsu",
+        "fileSize": 16082,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Kaif Shaikh"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "Cartoon"
+        ],
+        "version": 3,
+        "internalName": "TokuZilla",
+        "jarUrl": "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/builds/TokuZilla.jar",
+        "description": "Tokuzilla all in one Site for Tokusatsu",
+        "url": "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/builds/TokuZilla.cs3",
+        "name": "TokuZilla"
+    },
+    {
+        "iconUrl": "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/Zokaj/icon.png",
+        "jarFileSize": 38884,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/KaifTaufiq/CloudStream-Tokusatsu",
+        "fileSize": 10566,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Kaif Shaikh"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "Cartoon"
+        ],
+        "version": 2,
+        "internalName": "Zokaj",
+        "jarUrl": "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/builds/Zokaj.jar",
+        "description": "Zokaj all in one Site for Tokusatsu",
+        "url": "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/builds/Zokaj.cs3",
+        "name": "Zokaj"
+    }
+]

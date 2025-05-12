@@ -1,0 +1,8 @@
+{
+    "name": "Kaif's Repo",
+    "description": "Kaif's Repository",
+    "manifestVersion": 1,
+    "pluginLists": [
+      "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/builds/plugins.json"
+    ]
+}
