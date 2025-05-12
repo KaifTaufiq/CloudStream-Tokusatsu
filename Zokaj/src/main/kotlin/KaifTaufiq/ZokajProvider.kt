@@ -106,7 +106,7 @@ class ZokajProvider : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
     val Urlbody = app.get(data).document
-    val link = Urlbody.select("#open-link iframe").attr("data-src").ifEmpty { document.select("#open-link iframe").attr("src") }
+    val link = Urlbody.select("#open-link iframe").attr("data-src").ifEmpty { Urlbody.select("#open-link iframe").attr("src") }
     loadExtractor(link,subtitleCallback, callback)
     return true
     }
