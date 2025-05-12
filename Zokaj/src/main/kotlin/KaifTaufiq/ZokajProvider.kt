@@ -44,7 +44,7 @@ class ZokajProvider : MainAPI() {
       }
   }
 
-  override suspend fun search(query: String): List<AnimeSearchResponse> {
+  override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("$mainUrl/?s=$query").document
         return document.select("div.col-sm-4").mapNotNull {
             it.toSearchResult()
