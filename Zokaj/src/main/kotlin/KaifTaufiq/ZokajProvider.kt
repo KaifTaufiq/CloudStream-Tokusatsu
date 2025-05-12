@@ -20,7 +20,7 @@ class ZokajProvider : MainAPI() {
   override val mainPage = mainPageOf(
     "/super-sentai" to "Super Sentai",
     "/kamen-rider" to "Kamen Rider",
-    "/metal-hero" to "Meta Hero",
+    "/metal-hero" to "Metal Hero",
   )
 
   override suspend fun getMainPage(
@@ -55,10 +55,7 @@ class ZokajProvider : MainAPI() {
     }
   
   override suspend fun load(url: String): LoadResponse {
-        Log.d("Zokaj load",url)
         val document = app.get(url).document
-        Log.d("Zokaj",document.toString())
-
         var title = document.select("h1").text()
         var posterUrl = document.select("#information img").attr("data-src").ifEmpty { document.select("#information img").attr("src") }
         var plot = document.select("div.blockquote").text()
@@ -101,4 +98,13 @@ class ZokajProvider : MainAPI() {
             }
         }
   }
+  override suspend fun loadLinks(
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
+    Log.d("Kaif Link",data)
+    return true
+    }
 }
