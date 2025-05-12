@@ -15,7 +15,7 @@ class ZokajProvider : MainAPI() {
   )
   override val hasMainPage = true
   override var lang = "en"
-  val cinemeta_url = "https://v3-cinemeta.strem.io/meta"
+  override val hasDownloadSupport = false
 
   override val mainPage = mainPageOf(
     "/super-sentai" to "Super Sentai",
