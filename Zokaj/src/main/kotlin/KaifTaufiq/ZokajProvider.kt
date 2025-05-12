@@ -63,7 +63,7 @@ class ZokajProvider : MainAPI() {
         var posterUrl = document.select("#information img").attr("data-src").ifEmpty { document.select("#information img").attr("src") }
         var plot = document.select("div.blockquote").text()
         val yearContent = document.select("div.video-details").text()
-        val year = Regex("""\b(18\d{2}|19\d{2}|20\d{2}|2[1-9]\d{2}|3000)\b""").find(yearContent)?.value
+        val year = Regex("""\b(18\d{2}|19\d{2}|20\d{2}|2[1-9]\d{2}|3000)\b""").find(yearContent)?.value?.toIntOrNull()
         val div = document.select("div.video-details").text()
         val tvtype = if (div.contains("Previous Series", ignoreCase = true) == true) "series" else "movie"
     
