@@ -60,8 +60,8 @@ class ZokajProvider : MainAPI() {
         Log.d("Zokaj",document.toString())
 
         var title = document.select("h1").text()
-        var posterUrl = "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/TokuZilla/icon.png"
-        val div = document.select("div.video-details").text()
+        var posterUrl = document.select("#information img").attr("data-src").ifEmpty { document.select("#information img").attr("src") }
+        val div = document.select("div.video-details")
         val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
         if(tvtype == "series") {
           return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = listOf()) {
