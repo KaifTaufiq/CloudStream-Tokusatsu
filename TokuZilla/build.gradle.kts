@@ -18,7 +18,7 @@ cloudstream {
         "Cartoon"
     )
 
-    iconUrl = ""
+    iconUrl = "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/TokuZilla/icon.png"
 
     isCrossPlatform = true
 }
