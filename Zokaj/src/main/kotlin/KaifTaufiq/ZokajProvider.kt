@@ -68,7 +68,27 @@ class ZokajProvider : MainAPI() {
         val tvtype = if (div.contains("Previous Series", ignoreCase = true) == true) "series" else "movie"
     
         if(tvtype == "series") {
-          return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = listOf()) {
+          val episodes = mutableListOf<Episode>()
+          document.select("#list-episode-table tbody tr").forEach { row ->
+              val link = row.selectFirst("a.open-dl")?.attr("href") ?: return@forEach
+              val fullTitle = row.selectFirst("a.open-dl")?.text() ?: return@forEach
+              val nameCell = row.select("td").getOrNull(1)?.text()?.trim() ?: "Episode"
+          
+              // Extract episode number using regex (e.g., Episode 01)
+              val number = Regex("Episode\\s*(\\d+)", RegexOption.IGNORE_CASE)
+                  .find(fullTitle)
+                  ?.groupValues?.get(1)
+                  ?.toIntOrNull()
+          
+              val name = nameCell.replace("\"", "").substringBefore("(").trim()
+          
+              episodes += newEpisode(link) {
+                  this.name = "Episode ${number ?: ""}: $name"
+                  this.episode = number
+                }
+            }
+          
+          return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
                 this.posterUrl = posterUrl
                 this.plot = plot
                 this.year = year
