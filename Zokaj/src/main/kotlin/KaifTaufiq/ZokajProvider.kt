@@ -19,5 +19,19 @@ class ZokajProvider : MainAPI() {
     "/kamen-rider" to "Kamen Rider",
     "/metal-hero" to "Meta Hero",
   )
+
+  override suspend fun getMainPage(
+        page: Int,
+        request: MainPageRequest
+    ): HomePageResponse {
+      val url = if(page == 1) "$mainUrl${request.data}/" else "$mainUrl${request.data}/page/$page/"
+      var document = app.get(url).document
+    
+      var home = document.select("div.video-section").mapNotNull {
+        it.toSearchResult()
+      }
+
+      return newHomePageResponse(arrayListOf(HomePageList(request.name, home)), hasNext = true)
+    }
   
 }
