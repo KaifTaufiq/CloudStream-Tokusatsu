@@ -1,7 +1,7 @@
 package com.kaiftaufiq
 
 import com.lagradost.cloudstream3.*
-
+import org.jsoup.nodes.Element
 class ZokajProvider : MainAPI() {
   override var mainUrl = "https://zokaj.com/"
   override var name = "Zokaj"
@@ -33,5 +33,14 @@ class ZokajProvider : MainAPI() {
 
       return newHomePageResponse(arrayListOf(HomePageList(request.name, home)), hasNext = true)
     }
+
+  private fun Element.toSearchResult(): SearchResponse {
+    val title = this.select("h3.ftoc-heading-3 > a").text().trim()
+    val hre = fixUrl(("h3 a").attr("href"))
+    val posterUrl = this.select("a img").attr("data-src").ifEmpty { this.select("a img").attr("src") }
+    return newMovieSearchResponse(title, href, TvType.Movie) {
+      this.posterUrl = posterUrl
+    }
+  }
   
 }
