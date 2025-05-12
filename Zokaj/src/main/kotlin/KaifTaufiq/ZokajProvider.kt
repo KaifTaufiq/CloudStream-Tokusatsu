@@ -1,10 +1,7 @@
 package com.kaiftaufiq
 
 import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.AppUtils.parseJson
-import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import com.lagradost.api.Log
-import org.jsoup.nodes.Element
 
 class ZokajProvider : MainAPI() {
   override var mainUrl = "https://zokaj.com/"
@@ -57,7 +54,14 @@ class ZokajProvider : MainAPI() {
   
   override suspend fun load(url: String): LoadResponse {
         Log.d("Zokaj load",url)
-        val media = parseJson<Media>(url)
         val document = app.get(media.url).document
-        Log.d("Zokaj",media.toString())
+        Log.d("Zokaj",document.toString())
+        return newMovieLoadResponse(title, url, TvType.Movie, Media(
+                media.url,
+                mediaType = 1
+            ).toJson()) {
+                this.posterUrl = "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/TokuZilla/icon.png"
+                this.plot = "Plot Test"
+                this.year = "2000"
+            }
 }
