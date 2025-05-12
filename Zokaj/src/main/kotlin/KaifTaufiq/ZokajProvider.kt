@@ -61,15 +61,23 @@ class ZokajProvider : MainAPI() {
 
         var title = document.select("h1").text()
         var posterUrl = document.select("#information img").attr("data-src").ifEmpty { document.select("#information img").attr("src") }
+        var plot = document.select("div.blockquote").text()
+        val yearContent = document.select("div.video-details").text()
+        val year = Regex("""\b(18\d{2}|19\d{2}|20\d{2}|2[1-9]\d{2}|3000)\b""").find(yearContent)?.value
         val div = document.select("div.video-details").text()
         val tvtype = if (div.contains("Previous Series", ignoreCase = true) == true) "series" else "movie"
+    
         if(tvtype == "series") {
           return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = listOf()) {
                 this.posterUrl = posterUrl
+                this.plot = plot
+                this.year = year
             }
         } else {
           return newMovieLoadResponse(title, url, TvType.Movie, url) {
                 this.posterUrl = posterUrl
+                this.plot = plot
+                this.year = year
             }
         }
   }
