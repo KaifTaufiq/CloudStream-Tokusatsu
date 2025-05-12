@@ -3,7 +3,6 @@ package com.kaiftaufiq
 import com.lagradost.cloudstream3.*
 import com.lagradost.api.Log
 import org.jsoup.nodes.Element
-import org.jsoup.nodes.Document
 
 class ZokajProvider : MainAPI() {
   override var mainUrl = "https://zokaj.com/"
@@ -60,7 +59,7 @@ class ZokajProvider : MainAPI() {
         val document = app.get(url).document
         Log.d("Zokaj",document.toString())
 
-        var title = this.selectFirst("h1").text()
+        var title = this.select("h1").text()
         var posterUrl = "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/TokuZilla/icon.png"
         val div = document.select("div.video-details").text()
         val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
