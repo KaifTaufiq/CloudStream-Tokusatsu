@@ -64,7 +64,7 @@ class ZokajProvider : MainAPI() {
         val div = document.select("div.video-details").text()
         val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
         if(tvtype == "series") {
-          return newTvSeriesLoadResponse(title, url, TvType.TvSeries, url) {
+          return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = listOf()) {
                 this.posterUrl = posterUrl
             }
         } else {
