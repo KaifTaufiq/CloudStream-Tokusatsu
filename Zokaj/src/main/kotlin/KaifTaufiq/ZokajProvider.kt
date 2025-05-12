@@ -35,8 +35,8 @@ class ZokajProvider : MainAPI() {
     }
 
   private fun Element.toSearchResult(): SearchResponse {
-    val title = this.select("h3.ftoc-heading-3 > a").text().trim()
-    val href = fixUrl(this.select("h3.ftoc-heading-3 > a").attr("href")) // Corrected
+    val title = this.select("h3 a").text().trim()
+    val href = fixUrl(this.select("h3 a").attr("href"))
     val posterUrl = this.select("a img").attr("data-src").ifEmpty { this.select("a img").attr("src") }
     
     return newMovieSearchResponse(title, href, TvType.Movie) {
