@@ -104,7 +104,9 @@ class ZokajProvider : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-    Log.d("Kaif Link",data)
+    val body = app.get(data.url).document
+    val link = document.select("#open-link iframe").attr("data-src").ifEmpty { document.select("#open-link iframe").attr("src") }
+    loadExtractor(link,subtitleCallback, callback)
     return true
     }
 }
