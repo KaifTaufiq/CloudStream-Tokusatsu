@@ -42,7 +42,7 @@ subprojects {
     }
 
     android {
-        namespace = "com.example"
+        namespace = "com.kaiftaufiq"
 
         defaultConfig {
             minSdk = 21
