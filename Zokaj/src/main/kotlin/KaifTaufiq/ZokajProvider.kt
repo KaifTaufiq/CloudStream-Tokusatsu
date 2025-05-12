@@ -15,6 +15,7 @@ class ZokajProvider : MainAPI() {
   )
   override val hasMainPage = true
   override var lang = "en"
+  val cinemeta_url = "https://v3-cinemeta.strem.io/meta"
 
   override val mainPage = mainPageOf(
     "/super-sentai" to "Super Sentai",
@@ -33,10 +34,10 @@ class ZokajProvider : MainAPI() {
         it.toSearchResult()
       }
 
-      return newHomePageResponse(arrayListOf(HomePageList(request.name, home)), hasNext = true)
+      return newHomePageResponse(request.name, home)
     }
 
-  private fun Element.toSearchResult(): SearchResponse {
+  private fun Element.toSearchResult(): SearchResponse? {
     val title = this.select("h3 a").text().trim()
     val href = fixUrl(this.select("h3 a").attr("href"))
     val posterUrl = this.select("a img").attr("data-src").ifEmpty { this.select("a img").attr("src") }
@@ -55,14 +56,20 @@ class ZokajProvider : MainAPI() {
   
   override suspend fun load(url: String): LoadResponse {
         Log.d("Zokaj load",url)
-        val document = app.get(media.url).document
+        val document = app.get(url).document
         Log.d("Zokaj",document.toString())
-        return newMovieLoadResponse(title, url, TvType.Movie, Media(
-                media.url,
-                mediaType = 1
-            ).toJson()) {
-                this.posterUrl = "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/TokuZilla/icon.png"
-                this.plot = "Plot Test"
-                this.year = "2000"
+
+        var title = this.selectFirst(h1).text()
+        var posterUrl = "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/TokuZilla/icon.png"
+        val div = document.select("div.video-details").text()
+        val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
+        if(tvtype == "series") {
+          return newTvSeriesLoadResponse(title, url, TvType.TvSeries) {
+                this.posterUrl = posterUrl
             }
+        } else {
+          return newMovieLoadResponse(title, url, TvType.Movie) {
+                this.posterUrl = posterUrl
+            }
+        }
 }
