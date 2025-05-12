@@ -59,7 +59,7 @@ class ZokajProvider : MainAPI() {
         val document = app.get(url).document
         Log.d("Zokaj",document.toString())
 
-        var title = this.select("h1").text()
+        var title = document.select("h1").text()
         var posterUrl = "https://raw.githubusercontent.com/KaifTaufiq/CloudStream-Tokusatsu/refs/heads/master/TokuZilla/icon.png"
         val div = document.select("div.video-details").text()
         val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
