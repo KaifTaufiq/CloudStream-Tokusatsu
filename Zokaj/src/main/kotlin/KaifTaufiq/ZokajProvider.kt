@@ -39,10 +39,17 @@ class ZokajProvider : MainAPI() {
     val href = fixUrl(this.select("h3 a").attr("href"))
     val posterUrl = this.select("a img").attr("data-src").ifEmpty { this.select("a img").attr("src") }
     
-    return newMovieSearchResponse(title, href, TvType.Movie) {
-        this.posterUrl = posterUrl
+      return newMovieSearchResponse(title, href, TvType.Movie) {
+          this.posterUrl = posterUrl
+      }
+  }
+
+  override suspend fun search(query: String): List<AnimeSearchResponse> {
+        val document = app.get("$mainUrl/?s=$query").document
+        return document.select("div.col-sm-4").mapNotNull {
+            it.toSearchResult()
+        }
     }
-}
 
   
 }
