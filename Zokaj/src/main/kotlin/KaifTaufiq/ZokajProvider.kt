@@ -83,7 +83,7 @@ class ZokajProvider : MainAPI() {
               val name = nameCell.replace("\"", "").substringBefore("(").trim()
           
               episodes += newEpisode(link) {
-                  this.name = "Episode ${number ?: ""}: $name"
+                  this.name = name
                   this.episode = number
                 }
             }
