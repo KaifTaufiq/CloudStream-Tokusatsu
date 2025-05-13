@@ -69,7 +69,7 @@ class TokuZillaProvider : MainAPI() {
     var title = document.select("h1").text()
     var posterUrl = document.select("div.thumb img").attr("data-src").ifEmpty { document.select("div.thumb img").attr("src") }
     var plot = document.selectFirst("div.post-entry p").text()
-    val year = document.selectFirst("tr:contains(Year) span.meta")?.text()?.trim()?.toIntOrNull()
+    val year = document.selectFirst("tr:contains(Year) span.meta").text().trim().toIntOrNull()
     val div = document.select("div.top-detail").text()
     val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
     if(tvtype == "series") {
