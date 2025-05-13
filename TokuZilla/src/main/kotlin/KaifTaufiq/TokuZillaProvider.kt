@@ -30,7 +30,7 @@ class TokuZillaProvider : MainAPI() {
     page: Int,
     request: MainPageRequest
     ): HomePageResponse {
-      
+
     val url = if(page == 1) "$mainUrl${request.data}/" else "$mainUrl${request.data}/page/$page/"
     var document = app.get(url).document
 
@@ -58,7 +58,7 @@ class TokuZillaProvider : MainAPI() {
   }
 
   override suspend fun search(query: String): List<SearchResponse> {
-    val app.get("$mainUrl/?s=$query").document
+    val document = app.get("$mainUrl/?s=$query").document
     return document.select("div.col-sm-4").mapNotNull {
       it.toSearchResult()
     }
