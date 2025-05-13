@@ -100,14 +100,22 @@ class ZokajProvider : MainAPI() {
         }
   }
   override suspend fun loadLinks(
-        data: String,
-        isCasting: Boolean,
-        subtitleCallback: (SubtitleFile) -> Unit,
-        callback: (ExtractorLink) -> Unit
-    ): Boolean {
-    val Urlbody = app.get(data).document
-    val link = Urlbody.select("#open-link iframe").attr("data-src").ifEmpty { Urlbody.select("#open-link iframe").attr("src") }
-    loadExtractor(link,subtitleCallback, callback)
-    return true
+    data: String,
+    isCasting: Boolean,
+    subtitleCallback: (SubtitleFile) -> Unit,
+    callback: (ExtractorLink) -> Unit)
+    : Boolean {
+    val urlBody = app.get(data).document
+    val elements = document.select("div#open-link")
+    if (elements.size < 2) return false
+    val content = elements[1].selectFirst("iframe")
+    val vidSrc = content?.attr("data-src")?.ifEmpty {
+      content.attr("src")
+    }
+    if (!vidSrc.isNullOrEmpty()) {
+      loadExtractor(link,subtitleCallback, callback)
+      return true
+    }
+    return false
     }
 }
