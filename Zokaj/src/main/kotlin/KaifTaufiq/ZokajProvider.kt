@@ -113,7 +113,7 @@ class ZokajProvider : MainAPI() {
       content.attr("src")
     }
     if (!vidSrc.isNullOrEmpty()) {
-      loadExtractor(link,subtitleCallback, callback)
+      loadExtractor(vidSrc,subtitleCallback, callback)
       return true
     }
     return false
