@@ -26,10 +26,11 @@ class TokuZillaProvider : MainAPI() {
     "/movie" to "Movie",
   )
 
-  override suspend fun getMainPage()
+  override suspend fun getMainPage(
     page: Int,
-      request: MainPageRequest
+    request: MainPageRequest
     ): HomePageResponse {
+      
     val url = if(page == 1) "$mainUrl${request.data}/" else "$mainUrl${request.data}/page/$page/"
     var document = app.get(url).document
 
