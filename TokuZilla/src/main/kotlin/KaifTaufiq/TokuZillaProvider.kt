@@ -30,7 +30,6 @@ class TokuZillaProvider : MainAPI() {
     page: Int,
     request: MainPageRequest
     ): HomePageResponse {
-
     val url = if(page == 1) "$mainUrl${request.data}/" else "$mainUrl${request.data}/page/$page/"
     var document = app.get(url).document
 
@@ -69,20 +68,20 @@ class TokuZillaProvider : MainAPI() {
     var title = document.select("h1").text()
     var posterUrl = document.select("div.thumb img").attr("data-src").ifEmpty { document.select("div.thumb img").attr("src") }
     var plot = document.selectFirst("div.post-entry p").text()
-    val year = document.select("tr:contains(Year) span.meta")?.text()?.trim()?.toIntOrNull()
+    // val year = document.select("tr:contains(Year) span.meta").text().trim().toIntOrNull()
     val div = document.select("div.top-detail").text()
     val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
     if(tvtype == "series") {
       return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = mutableListOf()) {
         this.posterUrl = posterUrl
         this.plot = plot
-        this.year = year
+        // this.year = year
       }
     } else {
       return newMovieLoadResponse(title, url, TvType.Movie, url) {
         this.posterUrl = posterUrl
         this.plot = plot
-        this.year = year
+        // this.year = year
       }
     }
     // return newMovieLoadResponse(title, url, TvType.Movie, url) {
