@@ -72,18 +72,23 @@ class TokuZillaProvider : MainAPI() {
     val year = document.selectFirst("tr:contains(Year) span.meta")?.text()?.trim()?.toIntOrNull()
     val div = document.select("div.top-detail").text()
     val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
-    if(tvtype == "series") {
-      return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = mutableListOf()) {
-        this.posterUrl = posterUrl
-        this.plot = plot
-        this.year = year
-      }
-    } else {
-      return newMovieLoadResponse(title, url, TvType.Movie, url) {
-        this.posterUrl = posterUrl
-        this.plot = plot
-        this.year = year
-      }
+    // if(tvtype == "series") {
+    //   return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = mutableListOf()) {
+    //     this.posterUrl = posterUrl
+    //     this.plot = plot
+    //     this.year = year
+    //   }
+    // } else {
+    //   return newMovieLoadResponse(title, url, TvType.Movie, url) {
+    //     this.posterUrl = posterUrl
+    //     this.plot = plot
+    //     this.year = year
+    //   }
+    // }
+    return newMovieLoadResponse(title, url, TvType.Movie, url) {
+      this.posterUrl = posterUrl
+      this.plot = plot
+      this.year = year
     }
   }
 }
