@@ -64,26 +64,26 @@ class TokuZillaProvider : MainAPI() {
     }
   }
 
-  override suspend fun load(url: String): LoadResponse {
-    val document = app.get(url).document
-    var title = document.select("h1").text()
-    var posterUrl = document.select("div.thumb img").attr("data-src").ifEmpty { document.select("div.thumb img").attr("src") }
-    var plot = document.selectFirst("div.post-entry p").text()
-    // val year = document.selectFirst("tr:contains(Year) span.meta")?.text()?.trim()?.toIntOrNull() ?: null
-    val div = document.select("div.top-detail").text()
-    val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
-    if(tvtype == "series") {
-      return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = mutableListOf()) {
-        this.posterUrl = posterUrl
-        this.plot = plot
-        // this.year = year
-      }
-    } else {
-      return newMovieLoadResponse(title, url, TvType.Movie, url) {
-        this.posterUrl = posterUrl
-        this.plot = plot
-        // this.year = year
-      }
-    }
-  }
+  // override suspend fun load(url: String): LoadResponse {
+  //   val document = app.get(url).document
+  //   var title = document.select("h1").text()
+  //   var posterUrl = document.select("div.thumb img").attr("data-src").ifEmpty { document.select("div.thumb img").attr("src") }
+  //   var plot = document.selectFirst("div.post-entry p").text()
+  //   // val year = document.selectFirst("tr:contains(Year) span.meta")?.text()?.trim()?.toIntOrNull() ?: null
+  //   val div = document.select("div.top-detail").text()
+  //   val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
+  //   if(tvtype == "series") {
+  //     return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = mutableListOf()) {
+  //       this.posterUrl = posterUrl
+  //       this.plot = plot
+  //       // this.year = year
+  //     }
+  //   } else {
+  //     return newMovieLoadResponse(title, url, TvType.Movie, url) {
+  //       this.posterUrl = posterUrl
+  //       this.plot = plot
+  //       // this.year = year
+  //     }
+  //   }
+  // }
 }
