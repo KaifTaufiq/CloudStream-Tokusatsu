@@ -8,7 +8,7 @@ import com.lagradost.api.Log
 import org.jsoup.nodes.Element
 
 class TokuZillaProvider : MainAPI() {
-  override var mainUrl = "https://tokuzilla.net/"
+  override var mainUrl = "https://tokuzilla.net"
   override var name = "TokuZilla"
   override val supportedTypes = setOf(
     TvType.Cartoon,
@@ -29,12 +29,12 @@ class TokuZillaProvider : MainAPI() {
   }
 
   override val mainPage = mainPageOf(
+    "/" to "Home",
     // "/categories/super-sentai" to "Super Sentai",
     // "/categories/kamen-rider" to "Kamen Rider",
     // "/anime" to "Tokusatsu Anime",
     // "/series" to "Anime",
     // "/movie" to "Movie",
-    "/" to "Home",
   )
 
   override suspend fun getMainPage(
@@ -69,7 +69,7 @@ class TokuZillaProvider : MainAPI() {
   }
 
   override suspend fun search(query: String): List<SearchResponse> {
-    val document = cfKiller("$mainUrl/?s=$query").document
+    val document = cfKiller("$mainUrl?s=$query").document
     return document.select("div.col-sm-4").mapNotNull {
       it.toSearchResult()
     }
