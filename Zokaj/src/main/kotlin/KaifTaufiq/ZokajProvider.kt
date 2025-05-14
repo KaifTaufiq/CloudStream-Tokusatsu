@@ -106,7 +106,7 @@ class ZokajProvider : MainAPI() {
     callback: (ExtractorLink) -> Unit)
     : Boolean {
     val urlBody = app.get(data).document
-    val elements = urlBody.select("div#open-link")
+    val elements = urlBody.select("div.player")
     if (elements.size < 2) {
       loadExtractor("https://tokuzilla.net",subtitleCallback, callback)
       return true
