@@ -21,20 +21,17 @@ class TokuZillaProvider : MainAPI() {
   override val hasDownloadSupport = false
 
   private suspend fun cfKiller(url: String): NiceResponse {
-    var doc = app.get(url)
-    if (doc.document.select("title").text() == "Just a moment...") {
-        doc = app.get(url, interceptor = CloudflareKiller())
-    }
+    var doc = app.get(url, interceptor = CloudflareKiller())
     return doc
   }
 
   override val mainPage = mainPageOf(
     "/" to "Home",
-    // "/categories/super-sentai" to "Super Sentai",
-    // "/categories/kamen-rider" to "Kamen Rider",
-    // "/anime" to "Tokusatsu Anime",
-    // "/series" to "Anime",
-    // "/movie" to "Movie",
+    "/categories/super-sentai" to "Super Sentai",
+     "/categories/kamen-rider" to "Kamen Rider",
+     "/anime" to "Tokusatsu Anime",
+    "/series" to "Anime",
+     "/movie" to "Movie",
   )
 
   override suspend fun getMainPage(
