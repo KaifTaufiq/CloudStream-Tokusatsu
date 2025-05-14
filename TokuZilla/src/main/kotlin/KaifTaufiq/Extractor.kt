@@ -1,4 +1,5 @@
 package com.kaiftaufiq
+
 import android.annotation.SuppressLint
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -9,10 +10,6 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.amap
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.base64DecodeArray
-import com.lagradost.cloudstream3.extractors.Filesim
-import com.lagradost.cloudstream3.extractors.StreamWishExtractor
-import com.lagradost.cloudstream3.extractors.VidhideExtractor
-import com.lagradost.cloudstream3.extractors.Vidmoly
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
@@ -42,9 +39,9 @@ import javax.crypto.spec.SecretKeySpec
 // Contact: businesshackerindia@gmail.com 📧
 
 class BoosterX : Chillx() {
-    override val name = "BoosterX"
-    override val mainUrl = "https://boosterx.stream"
-    override val requiresReferer = true
+  override val name = "BoosterX"
+  override val mainUrl = "https://boosterx.stream"
+  override val requiresReferer = true
 }
 open class Chillx : ExtractorApi() {
   override val name = "Chillx"
@@ -67,7 +64,7 @@ open class Chillx : ExtractorApi() {
       val res = app.get(url, referer = referer, headers = headers).toString()
 
       val encodedString = Regex("(?:const|let|var|window\\.\\w+)\\s+\\w*\\s*=\\s*'(.*?)'").find(res)
-        ?..groupValues?.get(1)?.trim() ?: ""
+        ?.groupValues?.get(1)?.trim() ?: ""
       if (encodedString.isEmpty()) {
         throw Exception("Encoded string not found")
       }
