@@ -107,7 +107,10 @@ class ZokajProvider : MainAPI() {
     : Boolean {
     val urlBody = app.get(data).document
     val elements = urlBody.select("div#open-link")
-    if (elements.size < 2) return false
+    if (elements.size < 2) {
+      loadExtractor("https://tokuzilla.net",subtitleCallback, callback)
+      return true
+    } 
     val content = elements[1].selectFirst("iframe")
     val vidSrc = content?.attr("data-src")?.ifEmpty {
       content.attr("src")
@@ -116,6 +119,7 @@ class ZokajProvider : MainAPI() {
       loadExtractor(vidSrc,subtitleCallback, callback)
       return true
     }
+    loadExtractor("https://zokaj.com",subtitleCallback, callback)
     return false
     }
 }
