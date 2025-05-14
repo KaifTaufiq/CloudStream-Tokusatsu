@@ -63,13 +63,18 @@ open class Chillx : ExtractorApi() {
     try {
       val res = app.get(url, referer = referer, headers = headers).toString()
 
-      val encodedString = Regex("(?:const|let|var|window\\.\\w+)\\s+\\w*\\s*=\\s*'(.*?)'").find(res)
+      val encodedString = Regex("(?:const|let|var|window\\.\\w+)\\s+\\w*\\s*=\\s*'([^']{30,})'").find(res)
         ?.groupValues?.get(1)?.trim() ?: ""
       if (encodedString.isEmpty()) {
         throw Exception("Encoded string not found")
       }
 
-      val password = "#w8pukc]MoiBhH1{QlwOFF^I7pU]N9q^"
+      val passwordHex = "37527a3b323b7a366d7a45282572544f5a4a68625f3b645a7e765a5e5234514e"
+      val password = passwordHex.chunked(2)
+        .map { it.toInt(16).toByte() }
+        .toByteArray()
+        .toString(Charsets.UTF_8)
+
       val decryptedData = decryptAESCBC(encodedString, password)
         ?: throw Exception("Decryption failed")
 
