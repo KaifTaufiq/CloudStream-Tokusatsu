@@ -72,11 +72,24 @@ class TokuZillaProvider : MainAPI() {
     val year = yearText?.toIntOrNull()
     val div = document.select("div.top-detail").text()
     val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
-    if(tvtype == "series") {
-      return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = mutableListOf()) {
-        this.posterUrl = posterUrl
-        this.plot = plot
-        this.year = year
+    if (tvtype == "series") {
+      val episodes = mutableListOf<Episode>()
+
+      document.select("ul.pagination.post-tape li.page-item a.page-link").forEach { linkElement ->
+        val href = linkElement.attr("href")
+        val number = Regex("[?&]ep=(\\d+)").find(href)?.groupValues?.get(1)?.toIntOrNull()
+        val name = "Episode ${number ?: "?"}"
+        if (number != null) {
+          episodes += newEpisode(href) {
+              this.name = name
+              this.episode = number
+          }
+        }
+      }
+      return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
+          this.posterUrl = posterUrl
+          this.plot = plot
+          this.year = year
       }
     } else {
       return newMovieLoadResponse(title, url, TvType.Movie, url) {
@@ -85,11 +98,6 @@ class TokuZillaProvider : MainAPI() {
         this.year = year
       }
     }
-    // return newMovieLoadResponse(title, url, TvType.Movie, url) {
-    //   this.posterUrl = posterUrl
-    //   this.plot = plot
-    //   this.year = year
-    // }
   }
 
   override suspend fun loadLinks(
