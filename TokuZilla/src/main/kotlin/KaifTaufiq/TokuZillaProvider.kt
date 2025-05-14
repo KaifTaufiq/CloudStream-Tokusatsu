@@ -67,7 +67,7 @@ class TokuZillaProvider : MainAPI() {
     val document = app.get(url).document
     var title = document.select("h1").text()
     var posterUrl = document.select("div.thumb img").attr("data-src").ifEmpty { document.select("div.thumb img").attr("src") }
-    var plot = document.selectFirst("div.post-entry p").text().ifEmpty { null }
+    // var plot = document.selectFirst("div.post-entry p").text().ifEmpty { null }
     val yearText = document.select("div.top-detail div.right tr:has(th:contains(Year)) td span.meta").firstOrNull()?.text()?.trim()
     val year = yearText?.toIntOrNull()
     val div = document.select("div.top-detail").text()
