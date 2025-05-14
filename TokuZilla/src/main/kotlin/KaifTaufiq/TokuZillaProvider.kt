@@ -75,13 +75,13 @@ class TokuZillaProvider : MainAPI() {
       return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes = mutableListOf()) {
         this.posterUrl = posterUrl
         this.plot = plot
-        // this.year = year
+        this.year = year
       }
     } else {
       return newMovieLoadResponse(title, url, TvType.Movie, url) {
         this.posterUrl = posterUrl
         this.plot = plot
-        // this.year = year
+        this.year = year
       }
     }
     // return newMovieLoadResponse(title, url, TvType.Movie, url) {
