@@ -34,6 +34,7 @@ class TokuZillaProvider : MainAPI() {
     // "/anime" to "Tokusatsu Anime",
     // "/series" to "Anime",
     // "/movie" to "Movie",
+    "/" to "Home",
   )
 
   override suspend fun getMainPage(
