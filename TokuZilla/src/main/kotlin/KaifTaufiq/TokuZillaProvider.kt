@@ -42,7 +42,7 @@ class TokuZillaProvider : MainAPI() {
     request: MainPageRequest
     ): HomePageResponse {
     
-    val url = if(page == 1) "$mainUrl${request.data}/" else "$mainUrl${request.data}/page/$page/"
+    val url = if(page == 1) "$mainUrl${request.data}" else "$mainUrl${request.data}/page/$page/"
     var document = cfKiller(url).document
 
     var home = document.select("div.col-sm-4").mapNotNull {
