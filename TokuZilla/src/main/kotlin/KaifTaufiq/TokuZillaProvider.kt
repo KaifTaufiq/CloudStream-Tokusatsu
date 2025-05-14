@@ -96,7 +96,7 @@ class TokuZillaProvider : MainAPI() {
     data: String,
     isCasting: Boolean,
     subtitleCallback: (SubtitleFile) -> Unit,
-    callback: (ExtractorLink) -> Unit)
+    callback: (ExtractorLink) -> Unit
   ) : Boolean {
     val urlBody = app.get(data).document
     val elements = urlBody.select("div.player")
