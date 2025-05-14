@@ -29,10 +29,10 @@ class TokuZillaProvider : MainAPI() {
   }
 
   override val mainPage = mainPageOf(
-    "/categories/super-sentai" to "Super Sentai",
-    "/categories/kamen-rider" to "Kamen Rider",
-    "/anime" to "Tokusatsu Anime",
-    "/series" to "Anime",
+    // "/categories/super-sentai" to "Super Sentai",
+    // "/categories/kamen-rider" to "Kamen Rider",
+    // "/anime" to "Tokusatsu Anime",
+    // "/series" to "Anime",
     // "/movie" to "Movie",
   )
 
