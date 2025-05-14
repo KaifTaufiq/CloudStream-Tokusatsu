@@ -120,6 +120,6 @@ class ZokajProvider : MainAPI() {
       return true
     }
     loadExtractor("https://zokaj.com",subtitleCallback, callback)
-    return false
+    return true
     }
 }
