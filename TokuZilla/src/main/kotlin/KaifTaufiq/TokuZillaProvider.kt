@@ -68,7 +68,8 @@ class TokuZillaProvider : MainAPI() {
     var title = document.select("h1").text()
     var posterUrl = document.select("div.thumb img").attr("data-src").ifEmpty { document.select("div.thumb img").attr("src") }
     // var plot = document.selectFirst("div.post-entry p").text()
-    val year = document.select("tr:contains(Year) span.meta").text().trim().toIntOrNull()
+    val yearText = document.select("div.top-detail div.right tr:has(th:contains(Year)) td span.meta").firstOrNull()?.text()?.trim()
+    val year = yearText?.toIntOrNull()
     val div = document.select("div.top-detail").text()
     val tvtype = if (div.contains("episode", ignoreCase = true) == true) "series" else "movie"
     if(tvtype == "series") {
@@ -89,5 +90,22 @@ class TokuZillaProvider : MainAPI() {
     //   this.plot = plot
     //   this.year = year
     // }
+  }
+
+  override suspend fun loadLinks(
+    data: String,
+    isCasting: Boolean,
+    subtitleCallback: (SubtitleFile) -> Unit,
+    callback: (ExtractorLink) -> Unit)
+  ) : Boolean {
+    val urlBody = app.get(data).document
+    val elements = urlBody.select("div.player")
+    val vidSrc = elements.select("iframe").attr("src")
+    if (!vidSrc.isNullOrEmpty()) {
+      loadExtractor(vidSrc,subtitleCallback, callback)
+      return true
+    }
+    return false
+
   }
 }
