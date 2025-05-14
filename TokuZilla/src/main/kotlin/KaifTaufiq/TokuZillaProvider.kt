@@ -2,6 +2,7 @@ package com.kaiftaufiq
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
+import com.lagradost.cloudstream3.network.CloudflareKiller
 import com.lagradost.api.Log
 import org.jsoup.nodes.Element
 
@@ -18,6 +19,14 @@ class TokuZillaProvider : MainAPI() {
   override var lang = "en"
   override val hasDownloadSupport = false
 
+  private suspend fun cfKiller(url: String): NiceResponse {
+    var doc = app.get(url)
+    if (doc.document.select("title").text() == "Just a moment...") {
+        doc = app.get(url, interceptor = CloudflareKiller())
+    }
+    return doc
+  }
+
   override val mainPage = mainPageOf(
     "/categories/super-sentai" to "Super Sentai",
     "/categories/kamen-rider" to "Kamen Rider",
@@ -30,8 +39,9 @@ class TokuZillaProvider : MainAPI() {
     page: Int,
     request: MainPageRequest
     ): HomePageResponse {
+    
     val url = if(page == 1) "$mainUrl${request.data}/" else "$mainUrl${request.data}/page/$page/"
-    var document = app.get(url).document
+    var document = cfKiller(url).document
 
     var home = document.select("div.col-sm-4").mapNotNull {
       it.toSearchResult()
@@ -57,14 +67,14 @@ class TokuZillaProvider : MainAPI() {
   }
 
   override suspend fun search(query: String): List<SearchResponse> {
-    val document = app.get("$mainUrl/?s=$query").document
+    val document = cfKiller("$mainUrl/?s=$query").document
     return document.select("div.col-sm-4").mapNotNull {
       it.toSearchResult()
     }
   }
 
   override suspend fun load(url: String): LoadResponse {
-    val document = app.get(url).document
+    val document = cfKiller(url).document
     var title = document.select("h1").text()
     var posterUrl = document.select("div.thumb img").attr("data-src").ifEmpty { document.select("div.thumb img").attr("src") }
     // var plot = document.selectFirst("div.post-entry p").text().ifEmpty { null }
@@ -106,7 +116,7 @@ class TokuZillaProvider : MainAPI() {
     subtitleCallback: (SubtitleFile) -> Unit,
     callback: (ExtractorLink) -> Unit
   ) : Boolean {
-    val urlBody = app.get(data).document
+    val urlBody = cfKiller(data).document
     val elements = urlBody.select("div.player")
     val vidSrc = elements.select("iframe").attr("src")
     if (!vidSrc.isNullOrEmpty()) {
