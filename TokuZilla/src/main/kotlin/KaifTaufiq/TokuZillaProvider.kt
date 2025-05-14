@@ -23,7 +23,7 @@ class TokuZillaProvider : MainAPI() {
     "/categories/kamen-rider" to "Kamen Rider",
     "/anime" to "Tokusatsu Anime",
     "/series" to "Anime",
-    "/movie" to "Movie",
+    // "/movie" to "Movie",
   )
 
   override suspend fun getMainPage(
