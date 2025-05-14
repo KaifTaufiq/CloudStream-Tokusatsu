@@ -3,6 +3,7 @@ package com.kaiftaufiq
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.network.CloudflareKiller
+import com.lagradost.nicehttp.NiceResponse
 import com.lagradost.api.Log
 import org.jsoup.nodes.Element
 
