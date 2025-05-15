@@ -124,7 +124,7 @@ open class Chillx : ExtractorApi() {
       "${it.scheme}://${it.host}"
     }
   }
-  fun decryptAESCBC(encryptedData: String, password: String): String? {
+  fun decryptAESCBC(encryptedData: String, password: ByteArray): String? {
     try {
       // Base64 decode the encrypted data
       val decodedBytes = Base64.getDecoder().decode(encryptedData)
