@@ -130,7 +130,7 @@ open class Chillx : ExtractorApi() {
       val ivBytes = decodedBytes.copyOfRange(0, 16)
       val encryptedBytes = decodedBytes.copyOfRange(16, decodedBytes.size)
 
-      val secretKey = SecretKeySpec(keyBytes, "AES")
+      val secretKey = SecretKeySpec(password, "AES")
       val ivSpec = IvParameterSpec(ivBytes)
 
       val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
