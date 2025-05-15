@@ -70,7 +70,7 @@ open class Chillx : ExtractorApi() {
       }
       
       val passwordHex = app.get("https://pastebin.com/raw/DCmJyUSi").text
-      val password passwordHex.chunked(2)
+      val password = passwordHex.chunked(2)
         .map { it.toInt(16).toByte() }
         .toByteArray()
 
