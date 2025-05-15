@@ -126,19 +126,13 @@ open class Chillx : ExtractorApi() {
   }
   fun decryptAESCBC(encryptedData: String, password: ByteArray): String? {
     try {
-      // Base64 decode the encrypted data
       val decodedBytes = Base64.getDecoder().decode(encryptedData)
-
-      // Extract IV (first 16 bytes) and encrypted data (remaining bytes)
       val ivBytes = decodedBytes.copyOfRange(0, 16)
       val encryptedBytes = decodedBytes.copyOfRange(16, decodedBytes.size)
 
-      // Prepare key
-      val keyBytes = password.toByteArray(Charsets.UTF_8)
       val secretKey = SecretKeySpec(keyBytes, "AES")
       val ivSpec = IvParameterSpec(ivBytes)
 
-      // Decrypt using AES-CBC
       val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
       cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec)
 
