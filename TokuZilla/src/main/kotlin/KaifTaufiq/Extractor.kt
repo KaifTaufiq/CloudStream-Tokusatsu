@@ -58,7 +58,7 @@ open class Chillx : ExtractorApi() {
     val headers = mapOf(
       "Origin" to baseurl,
       "Referer" to baseurl,
-      "User-Agent" to "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36"
+      "User-Agent" to "Mozilla/5.0 (Linux; Android 11; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36"
     )
     try {
       val res = app.get(url, referer = referer, headers = headers).toString()
@@ -69,11 +69,7 @@ open class Chillx : ExtractorApi() {
         throw Exception("Encoded string not found")
       }
 
-      val passwordHex = "37527a3b323b7a366d7a45282572544f5a4a68625f3b645a7e765a5e5234514e"
-      val password = passwordHex.chunked(2)
-        .map { it.toInt(16).toByte() }
-        .toByteArray()
-        .toString(Charsets.UTF_8)
+      val password = getPasswordFromPastebin()
 
       val decryptedData = decryptAESCBC(encodedString, password)
         ?: throw Exception("Decryption failed")
@@ -124,6 +120,12 @@ open class Chillx : ExtractorApi() {
     return URI(url).let {
       "${it.scheme}://${it.host}"
     }
+  }
+  fun getPasswordFromPasteBin(): ByteArray {
+    val passwordHex = app.get("https://pastebin.com/raw/DCmJyUSi").text
+    return passwordHex.chunked(2)
+      .map { it.toInt(16).toByte() }
+      .toByteArray()
   }
   fun decryptAESCBC(encryptedData: String, password: String): String? {
     try {
