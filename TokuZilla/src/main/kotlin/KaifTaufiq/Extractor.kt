@@ -68,8 +68,11 @@ open class Chillx : ExtractorApi() {
       if (encodedString.isEmpty()) {
         throw Exception("Encoded string not found")
       }
-
-      val password = getPasswordFromPastebin()
+      
+      val passwordHex = app.get("https://pastebin.com/raw/DCmJyUSi").text
+      val password passwordHex.chunked(2)
+        .map { it.toInt(16).toByte() }
+        .toByteArray()
 
       val decryptedData = decryptAESCBC(encodedString, password)
         ?: throw Exception("Decryption failed")
@@ -120,12 +123,6 @@ open class Chillx : ExtractorApi() {
     return URI(url).let {
       "${it.scheme}://${it.host}"
     }
-  }
-  fun getPasswordFromPasteBin(): ByteArray {
-    val passwordHex = app.get("https://pastebin.com/raw/DCmJyUSi").text
-    return passwordHex.chunked(2)
-      .map { it.toInt(16).toByte() }
-      .toByteArray()
   }
   fun decryptAESCBC(encryptedData: String, password: String): String? {
     try {
