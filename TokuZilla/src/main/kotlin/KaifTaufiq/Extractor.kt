@@ -56,7 +56,6 @@ open class Chillx : ExtractorApi() {
   ) {
     val baseurl = getBaseUrl(url)
     val headers = mapOf(
-      "Origin" to baseurl,
       "Referer" to baseurl,
       "User-Agent" to "Mozilla/5.0 (Linux; Android 11; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36"
     )
